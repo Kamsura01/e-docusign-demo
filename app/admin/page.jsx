@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ProfileName from "@/components/ProfileName";
 
 const AdminPage = () => {
   const { data: session, status } = useSession();
@@ -16,20 +17,12 @@ const AdminPage = () => {
 
   return (
     status == "authenticated" &&
-    session.user && (
+    session.user.ROLE == "Admin" && (
       <>
         <Navbar />
         <div className="container mx-auto mt-3 font-prompt">
           <h1 className="text-3xl my-3">ผู้ดูแลระบบ</h1>
-          <p>
-            {session.user.USER_PREFIX +
-              session.user.USER_NAME +
-              " " +
-              session.user.USER_SURNAME +
-              " (" +
-              session.user.HR_ID +
-              ")"}
-          </p>
+          <ProfileName />
           <hr className="my-3"></hr>
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting

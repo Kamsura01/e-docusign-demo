@@ -42,15 +42,26 @@ const Navbar = () => {
               </Link>
             </li>
             {status == "authenticated" && (
-              <li>
-                <Link
-                  href={"/passcode"}
-                  className="btn btn-outline mx-2 border-0 text-lg 
+              <>
+                <li>
+                  <Link
+                    href={"/passcode"}
+                    className="btn btn-outline mx-2 border-0 text-lg 
                   text-gray-300 hover:bg-gray-700 hover:text-white"
-                >
-                  ยืนยันตัวตน
-                </Link>
-              </li>
+                  >
+                    ยืนยันตัวตน
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={"/message"}
+                    className="btn btn-outline mx-2 border-0 text-lg 
+                  text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    ส่งข้อความ
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
           <ul className="flex">
@@ -89,7 +100,7 @@ const Navbar = () => {
                         ข้อมูลส่วนตัว
                       </Link>
                     </li>
-                    {session.user.ROLE === "Admin" && (
+                    {status == "authenticated" && session.user.ROLE && (
                       <li>
                         <Link href={"/admin"} className="text-base">
                           ผู้ดูแลระบบ

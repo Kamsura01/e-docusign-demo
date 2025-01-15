@@ -22,6 +22,7 @@ export const authOptions = {
             USER_NAME: user[0].USER_F_NAME,
             USER_SURNAME: user[0].USER_L_NAME,
             AD_USER: user[0].ADUserLogin,
+            ROLE: "Admin",
             PASSCODE: "1234",
           };
         } else {

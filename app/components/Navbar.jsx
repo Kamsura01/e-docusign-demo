@@ -66,12 +66,43 @@ const Navbar = () => {
               </li>
             ) : (
               <li>
-                <a
-                  onClick={() => signOut()}
-                  className="btn btn-outline text-lg btn-error"
-                >
-                  ออกจากระบบ
-                </a>
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        alt="Profile"
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content border border-gray-300 
+                    bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow-xl"
+                  >
+                    <li>
+                      <Link href={"/profile"} className="text-base">
+                        ข้อมูลส่วนตัว
+                      </Link>
+                    </li>
+                    {session.user.ROLE === "Admin" && (
+                      <li>
+                        <Link href={"/admin"} className="text-base">
+                          ผู้ดูแลระบบ
+                        </Link>
+                      </li>
+                    )}
+                    <li>
+                      <a className="text-base" onClick={() => signOut()}>
+                        ออกจากระบบ
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
             )}
           </ul>

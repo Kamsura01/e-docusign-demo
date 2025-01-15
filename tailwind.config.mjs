@@ -12,6 +12,9 @@ export default {
         foreground: "var(--foreground)",
       },
     },
+    fontFamily: {
+      prompt: ["Prompt"],
+    },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };

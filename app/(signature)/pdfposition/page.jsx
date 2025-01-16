@@ -25,7 +25,7 @@ const NewDocumentPage = () => {
     }
 
     if (file.type !== "application/pdf") {
-      setError(file.name + " File Type is wrong.");
+      setError(file.name + ": รูปแบบของเอกสารไม่ถูกต้อง ต้องเป็นไฟล์ .pdf เท่านั้น");
       setDisplay(false);
       return;
     }

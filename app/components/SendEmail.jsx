@@ -1,7 +1,24 @@
+import { useState } from "react";
+
 const SendEmail = () => {
+  const [state, setState] = useState("");
+
+  const send = async () => {
+    setState("Loading");
+
+    await fetch("@/api/email", {
+      method: "POST",
+    });
+
+    setTimeout(() => {
+      setState("Ready");
+    }, 1500);
+  };
+
   return (
     <>
-      <button className="btn btn-outline">
+      {state}
+      <button className="btn btn-outline" onClick={send}>
         <svg
           className="w-6 h-6"
           aria-hidden="true"

@@ -52,15 +52,6 @@ const Navbar = () => {
                     ยืนยันตัวตน
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href={"/message"}
-                    className="btn btn-outline mx-2 border-0 text-lg 
-                  text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    ส่งข้อความ
-                  </Link>
-                </li>
               </>
             )}
           </ul>

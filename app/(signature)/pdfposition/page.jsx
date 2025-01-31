@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import Select from "react-select";
 import Navbar from "@/components/Navbar";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -14,6 +15,35 @@ const NewDocumentPage = () => {
   const [pageNumber, setPageNumber] = useState(1); // Current Page
   const [positionID, setPositionID] = useState(1);
   const [positions, setPositions] = useState([]);
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    getMembers();
+  }, []);
+
+  const getMembers = async () => {
+    try {
+      const data = await fetch("/api/members");
+      const response = await data.json();
+      const members = [];
+
+      for (let i = 0; i < response.length; i++) {
+        const member = {
+          value: response[i].USER_ID,
+          label:
+            response[i].USER_PREFIX +
+            response[i].USER_F_NAME +
+            " " +
+            response[i].USER_L_NAME,
+        };
+        members.push(member);
+      }
+
+      setMembers(members);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePdfUpload = async (e) => {
     e.preventDefault();
@@ -25,7 +55,9 @@ const NewDocumentPage = () => {
     }
 
     if (file.type !== "application/pdf") {
-      setError(file.name + ": รูปแบบของเอกสารไม่ถูกต้อง ต้องเป็นไฟล์ .pdf เท่านั้น");
+      setError(
+        file.name + ": รูปแบบของเอกสารไม่ถูกต้อง ต้องเป็นไฟล์ .pdf เท่านั้น"
+      );
       setDisplay(false);
       return;
     }
@@ -77,6 +109,7 @@ const NewDocumentPage = () => {
       height: rect.height,
       x: x,
       y: y,
+      userID: "",
     };
 
     drawPostionMarking(canvas, positionID, x, y);
@@ -116,6 +149,18 @@ const NewDocumentPage = () => {
     }
   };
 
+  const onChangeMember = (e, position) => {
+    for (let i = 0; i < positions.length; i++) {
+      if(positions[i].id == position.id){
+        positions[i].userID = e.value;
+      }
+    }
+  };
+
+  const onClickSubmit = () => {
+    console.log(positions);
+  };
+
   const clearData = () => {
     setError("");
     setSelectedFile(null);
@@ -132,7 +177,7 @@ const NewDocumentPage = () => {
       <div className="container mx-auto font-prompt">
         <h1 className="text-3xl my-3">เอกสารใหม่</h1>
         <hr className="my-3"></hr>
-        <div className="flex w-full bg-slate-300 justify-start">
+        <div className="flex w-full bg-slate-300 justify-between">
           <div className="flex my-2 mx-4">
             <input
               id="fileUpload"
@@ -189,6 +234,15 @@ const NewDocumentPage = () => {
               ถัดไป
             </button>
           </div>
+          <div className="flex my-2 mx-4">
+            <button
+              className="btn btn-success mx-3 text-white"
+              style={{ display: display ? "inline-block" : "none" }}
+              onClick={onClickSubmit}
+            >
+              บันทึกข้อมูล
+            </button>
+          </div>
         </div>
         <div
           className="flex mb-3"
@@ -213,12 +267,42 @@ const NewDocumentPage = () => {
                         กว้าง: {position.width}, ยาว: {position.height}
                       </div>
                     </div>
-                    <button
-                      className="btn btn-error text-white"
-                      onClick={() => removeSignaturePosition(index)}
-                    >
-                      ลบ
-                    </button>
+                  </div>
+                  <div className="flex justify-between py-2">
+                    <div className="w-4/5">
+                      <Select
+                        options={members}
+                        className="selectedMember m-0 w-full"
+                        onChange={(e) => onChangeMember(e, position)}
+                        placeholder="กรุณาเลือกผู้เช็นต์"
+                      />
+                    </div>
+                    <div className="flex w-1/5 justify-end">
+                      <div
+                        className="flex w-auto align-middle cursor-pointer items-center px-3 rounded
+                        text-white bg-red-500 hover:bg-red-600"
+                        onClick={() => removeSignaturePosition(index)}
+                      >
+                        <svg
+                          className="w-[24px] h-[24px]"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.5"
+                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 
+                              7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </li>
               ))}

@@ -25,7 +25,7 @@ const LoginPage = () => {
         return;
       }
 
-      router.replace("profile");
+      router.replace("/");
     } catch (error) {
       console.log(error);
     }

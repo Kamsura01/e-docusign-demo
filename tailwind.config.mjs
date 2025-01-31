@@ -8,12 +8,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "primary-blue": "#1F4068",
+        "primary-green": "#206A5D",
+        "primary-black": "#1B1C25",
+        "primary-gray": "#EBECF1",
+        "primary-dark-gray": "#CED1DE",
       },
     },
     fontFamily: {
       prompt: ["Prompt"],
+      anta: ["Anta"],
+      almarai: ["Almarai"]
     },
   },
   plugins: [require("daisyui")],

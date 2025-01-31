@@ -11,7 +11,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     if (status == "unauthenticated") {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [router, status]);
 

@@ -11,20 +11,21 @@ export const authOptions = {
         const { username, password } = credentials;
         const query = `SELECT * FROM datacenter.user_member m WHERE m.D_CANCEL IS NULL 
           AND m.ADUserLogin = '${username}' AND m.USER_PASS = '${password}'`;
-        const user = await executeQuery(query, []);
+        const member = await executeQuery(query, []);
 
-        if (user) {
+        if (member) {
           return {
-            USER_ID: user[0].USER_ID,
-            HR_ID: user[0].HR_ID,
-            POSITION_ID: user[0].EMPLOYEE_POSITION_ID,
-            USER_PREFIX: user[0].USER_PREFIX,
-            USER_NAME: user[0].USER_F_NAME,
-            USER_SURNAME: user[0].USER_L_NAME,
-            AD_USER: user[0].ADUserLogin,
+            USER_ID: member[0].USER_ID,
+            HR_ID: member[0].HR_ID,
+            POSITION_ID: member[0].EMPLOYEE_POSITION_ID,
+            USER_PREFIX: member[0].USER_PREFIX,
+            USER_NAME: member[0].USER_F_NAME,
+            USER_SURNAME: member[0].USER_L_NAME,
+            AD_USER: member[0].ADUserLogin,
             ROLE: "Admin",
             PASSCODE: "1234",
           };
+          
         } else {
           throw new Error("Invalid email or password");
         }

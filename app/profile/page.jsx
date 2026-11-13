@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ProfileName from "@/components/ProfileName";
 
 const ProfilePage = () => {
   const { data: session, status } = useSession();
@@ -10,7 +11,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (status == "unauthenticated") {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [router, status]);
 
@@ -20,13 +21,8 @@ const ProfilePage = () => {
       <>
         <Navbar />
         <div className="container mx-auto mt-3 font-prompt">
-          <h1 className="text-3xl my-3">ตั้งค่าพนักงาน</h1>
-          <p>
-            {
-              session.user.USER_PREFIX + session.user.USER_NAME + " " +
-              session.user.USER_SURNAME + " (" + session.user.HR_ID + ")"
-            }
-          </p>
+          <h1 className="text-3xl my-3">ข้อมูลส่วนตัว</h1>
+          <ProfileName />
           <hr className="my-3"></hr>
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting

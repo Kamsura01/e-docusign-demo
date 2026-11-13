@@ -17,12 +17,11 @@ const HomePage = () => {
 
   return (
     <main>
-      <div className="flex font-prompt">
-        <Sidebar activeMenu={"folder"} />
-        <div className="w-full">
-          <Navbar pageTitle={"แฟ้มเอกสาร"} />
-          <div className="px-10 py-4">บทความ</div>
-        </div>
+      <Navbar />
+      <div className="container mx-auto font-prompt">
+        <h1 className="text-3xl my-3">หน้าหลัก</h1>
+        <h1 className="text-3xl my-3">Test AI Review</h1>
+        <hr className="my-3"></hr>
       </div>
     </main>
   );

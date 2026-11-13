@@ -1,7 +1,20 @@
-"use client"
+"use client";
 import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status == "unauthenticated") {
+      router.replace("/login");
+    }
+  }, [router, status]);
+
   return (
     <main>
       <Navbar />

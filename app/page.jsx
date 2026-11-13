@@ -7,7 +7,7 @@ const HomePage = () => {
       <Navbar />
       <div className="container mx-auto font-prompt">
         <h1 className="text-3xl my-3">หน้าหลัก</h1>
-        <h1 className="text-3xl my-3">Test AI Review</h1>
+        <h1 className="text-3xl my-3">Test AI Review 2</h1>
         <hr className="my-3"></hr>
       </div>
     </main>
